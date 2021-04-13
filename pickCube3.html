@@ -34,7 +34,9 @@
 in  vec4 aPosition;
 in  vec3 aNormal;
 in  vec4 aColor;
+in vec2 aTexCoord;
 out vec4 vColor;
+out vec2 vTexCoord;
 
 uniform vec4 uAmbientProduct, uDiffuseProduct, uSpecularProduct;
 uniform mat4 uModelViewMatrix;
@@ -75,7 +77,7 @@ void main()
 
     gl_Position = uProjectionMatrix * uModelViewMatrix * aPosition;
     vColor = ambient + diffuse +specular;
-
+    vTexCoord = aTexCoord;
     vColor.a = 1.0;
 }
 </script>
@@ -87,8 +89,11 @@ precision mediump float;
 
 uniform int uColorIndex;
 
+in  vec2 vTexCoord;
 in vec4 vColor;
 out vec4 fColor;
+
+uniform sampler2D uTextureMap;
 
 void
 main()
@@ -102,8 +107,9 @@ main()
     c[5] = vec4(0.0, 1.0, 1.0, 1.0);
     c[6] = vec4(1.0, 0.0, 1.0, 1.0);
 
-    if(uColorIndex==0) fColor = c[0];
-    else fColor = c[uColorIndex];
+    fColor = c[uColorIndex]*texture(uTextureMap, vTexCoord);
+    //if(uColorIndex==0) fColor = c[0];
+    //else fColor = c[uColorIndex];
 }
 </script>
 

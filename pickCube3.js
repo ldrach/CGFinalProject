@@ -1,7 +1,6 @@
 "use strict";
 
 var elt;
-var program;
 var canvas;
 var gl;
 var time = 0;
@@ -13,13 +12,53 @@ var toggleCount = 0;
 var positionsArray = [];
 var normalsArray = [];
 var colorsArray = [];
-
+var texSize = 64;
 
 var framebuffer;
 
 var flag = false;
 
 var color = new Uint8Array(4);
+
+var image1 = new Array()
+for (var i =0; i<texSize; i++)  image1[i] = new Array();
+for (var i =0; i<texSize; i++)
+    for ( var j = 0; j < texSize; j++)
+        image1[i][j] = new Float32Array(4);
+for (var i =0; i<texSize; i++) for (var j=0; j<texSize; j++) {
+    var c = (((i & 0x8) == 0) ^ ((j & 0x8) == 0));
+    image1[i][j] = [c, c, c, 1];
+}
+
+// Convert floats to ubytes for texture
+
+var image2 = new Uint8Array(4*texSize*texSize);
+
+for (var i = 0; i < texSize; i++)
+    for (var j = 0; j < texSize; j++)
+        for(var k =0; k<4; k++)
+            image2[4*texSize*i+4*j+k] = 255*image1[i][j][k];
+
+var texCoordsArray = [];
+
+var texCoord = [
+    vec2(0, 0),
+    vec2(0, 1),
+    vec2(1, 1),
+    vec2(1, 0)
+];
+
+function configureTexture(image) {
+    var texture = gl.createTexture();
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, texSize, texSize, 0,
+        gl.RGBA, gl.UNSIGNED_BYTE, image);
+    gl.generateMipmap(gl.TEXTURE_2D);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER,
+        gl.NEAREST_MIPMAP_LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+}
 
 var vertices = [
         vec4(-0.5, -0.5,  0.5, 1.0),
@@ -70,7 +109,7 @@ var axis = xAxis;
 var theta = vec3(45.0, 45.0, 45.0);
 
 var thetaLoc;
-var Index = 0;
+
 
 init();
 
@@ -85,26 +124,27 @@ function quad(a, b, c, d) {
      positionsArray.push(vertices[a]);
      normalsArray.push(normal);
      colorsArray.push(vertexColors[a]);
-
+     texCoordsArray.push(texCoord[0]);
      positionsArray.push(vertices[b]);
      normalsArray.push(normal);
      colorsArray.push(vertexColors[a]);
-
+     texCoordsArray.push(texCoord[1]);
      positionsArray.push(vertices[c]);
      normalsArray.push(normal);
      colorsArray.push(vertexColors[a]);
-
+     texCoordsArray.push(texCoord[2]);
      positionsArray.push(vertices[a]);
      normalsArray.push(normal);
      colorsArray.push(vertexColors[a]);
-
+     texCoordsArray.push(texCoord[0]);
      positionsArray.push(vertices[c]);
      normalsArray.push(normal);
      colorsArray.push(vertexColors[a]);
-
+     texCoordsArray.push(texCoord[2]);
      positionsArray.push(vertices[d]);
      normalsArray.push(normal);
      colorsArray.push(vertexColors[a]);
+     texCoordsArray.push(texCoord[3]);
 }
 
 
@@ -217,6 +257,17 @@ gl.bindFramebuffer(gl.FRAMEBUFFER, null);
     var positionLoc = gl.getAttribLocation(program, "aPosition");
     gl.vertexAttribPointer(positionLoc, 4, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(positionLoc);
+
+    var tBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, tBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, flatten(texCoordsArray), gl.STATIC_DRAW);
+
+    var texCoordLoc = gl.getAttribLocation(program, "aTexCoord");
+    gl.vertexAttribPointer(texCoordLoc, 2, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(texCoordLoc);
+
+    configureTexture(image2);
+    gl.uniform1i( gl.getUniformLocation(program, "uTextureMap"), 0);
 
     viewerPos = vec3(0.0, 0.0, -20.0);
 
@@ -347,22 +398,22 @@ gl.bindFramebuffer(gl.FRAMEBUFFER, null);
             elt.innerHTML = "<td> Miss </td>";
             choice = "Miss";
         }
-
-        if(target==choice) {
-            score++;
-            document.getElementById("score").innerHTML = score;
-            document.getElementById("gameHeader").innerHTML="Correct!";
+        if(flag==true) {
+            if (target == choice) {
+                score++;
+                document.getElementById("score").innerHTML = score;
+                document.getElementById("gameHeader").innerHTML = "Correct!";
+            } else {
+                score = 0;
+                level = 1;
+                document.getElementById("level").innerHTML = level;
+                document.getElementById("score").innerHTML = score;
+                gl.clearColor(1, 1, 1, 1.0);
+                document.getElementById("gameHeader").innerHTML = "Sorry, please try again! Careful of the Black Spaces!";
+            }
         }
-        else{
-            score = 0;
-            level = 1;
-            document.getElementById("level").innerHTML=level;
-            document.getElementById("score").innerHTML = score;
-            gl.clearColor(1, 1, 1, 1.0);
-            document.getElementById("gameHeader").innerHTML="Sorry, please try again!";
-        }
 
-        if(score==10){
+        if(score==3){
             score=0;
             document.getElementById("score").innerHTML = score;
             level++;

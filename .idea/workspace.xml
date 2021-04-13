@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="deff86ac-5dfe-43e2-baa3-2467b06c42a1" name="Default Changelist" comment="" />
+    <list default="true" id="deff86ac-5dfe-43e2-baa3-2467b06c42a1" name="Default Changelist" comment="Working Game with WebGL2">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pickCube3.html" beforeDir="false" afterPath="$PROJECT_DIR$/pickCube3.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pickCube3.js" beforeDir="false" afterPath="$PROJECT_DIR$/pickCube3.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1r4nLGuHs9ocJyoHqlIrjYaspGa" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -35,22 +43,38 @@
       <option name="presentableId" value="Default" />
       <updated>1618244171930</updated>
       <workItem from="1618244172986" duration="11247000" />
-      <workItem from="1618328250115" duration="9647000" />
+      <workItem from="1618328250115" duration="11530000" />
     </task>
+    <task id="LOCAL-00001" summary="Working Game with WebGL2">
+      <created>1618338044731</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1618338044731</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Working Game with WebGL2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Working Game with WebGL2" />
   </component>
   <component name="WindowStateProjectService">
     <state x="640" y="256" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1618331022473">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="640" y="256" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1618331022473" />
-    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1618337323354">
+    <state x="836" y="422" key="Github.ShareDialog" timestamp="1618338078458">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1618337323354" />
+    <state x="836" y="422" key="Github.ShareDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1618338078458" />
+    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1618339077259">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="92" y="92" width="1736" height="856" key="com.intellij.history.integration.ui.views.FileHistoryDialog/0.0.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1618339077259" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1618332392326">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
